@@ -3,17 +3,21 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
-<p>This page should be showing information about all Teachers</p>
-
-<div id="containerlist">
-    <h2>List of Teachers</h2>
+<div id="containerlist" style="width: 100%; margin: 0 auto; margin-top: 25px;">
+    <nav>
+        <a class="navlink" style="font-weight:600;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" href="/Teacher/New">New Teacher</a>
+    </nav>
+    <h2 style="font-weight:800; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">List of Teachers</h2>
+    <form action="/Teacher/List" method="GET">
+        <input type="text" name="SearchKey" autocomplete="off" />
+        <input type="submit" value="Search" />
+    </form>
     @foreach (var teacher in Model)
-            {
-                <div class="list-group-item row">
-                    <div class="col-md-12"><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname</a></div>
-                </div>
-            }
+    {
+        <div class="listitemrow" style="margin: 10px 0;">
+            <div class="col-md-12"><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname @teacher.EmployeeNumber @teacher.TeacherJoinDate</a></div>
+        </div>
+    }
 </div>
 
 

@@ -12,6 +12,8 @@ namespace Assignment3_N01481887.Models
         public string TeacherFname;
         public string TeacherLname;
         public string TeacherSalary;
+        public string EmployeeNumber;
+        public string TeacherJoinDate;
         
         
     }

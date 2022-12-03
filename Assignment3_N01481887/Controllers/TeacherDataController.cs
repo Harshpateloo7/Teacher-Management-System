@@ -23,7 +23,8 @@ namespace Assignment3_N01481887.Controllers
         /// A list of Teachers (first names and last names)
         /// </returns>
         [HttpGet]
-        public IEnumerable<Teacher> ListTeachers()
+        [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
+        public IEnumerable<Teacher> ListTeachers(string SearchKey=null)
         {
             //Create an instance of a connection
             MySqlConnection Conn = BlogTeacher.AccessDatabase();
@@ -35,10 +36,16 @@ namespace Assignment3_N01481887.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from Teachers";
+
+            cmd.CommandText = "Select * FROM Teachers WHERE teacherfname like lower('%"+SearchKey+ "%') or teacherlname like lower('%"+SearchKey+"%') or teacherid like lower('%"+SearchKey+"%') or lower(concat(teacherfname,' ',teacherlname)) like lower('%"+SearchKey+"%')";
+            
+            cmd.Parameters.AddWithValue("@key","%" + SearchKey + "%");
+            
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
+            
+            //Creat an empty list of Teachers
             List<Teacher> Teachers = new List<Teacher> { };
             //Loop Through Each Row the Result Set
             while (ResultSet.Read())
@@ -48,12 +55,15 @@ namespace Assignment3_N01481887.Controllers
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string TeacherSalary = ResultSet["salary"].ToString();
+                string TeacherJoinDate = ResultSet["hiredate"].ToString();
+
            
                 Teacher NewTeacher = new Teacher();
                 NewTeacher.TeacherId = TeacherID;
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.TeacherSalary = TeacherSalary;
+                NewTeacher.TeacherJoinDate = TeacherJoinDate;
 
                 //Add the Teacher Name to the List
                 Teachers.Add(NewTeacher);
@@ -85,7 +95,8 @@ namespace Assignment3_N01481887.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from Teachers where teacherid = " + id;
+            cmd.CommandText = "Select * from teachers where teacherid = " +id;
+            
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -97,13 +108,68 @@ namespace Assignment3_N01481887.Controllers
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string TeacherSalary = ResultSet["salary"].ToString();
+                string EmployeeNumber = ResultSet["employeenumber"].ToString();
+                string TeacherJoinDate = ResultSet["hiredate"].ToString();
+
 
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.TeacherSalary = TeacherSalary;
+                NewTeacher.EmployeeNumber = EmployeeNumber;
+                NewTeacher.TeacherJoinDate = TeacherJoinDate;
             }
             return NewTeacher;
+        }
+        /// <summary>
+        /// Delete Teacher data from the list
+        /// </summary>
+        /// <param name="id">Teacher ID</param>
+        /// <return>
+        /// Delete Data from the list when user click on Confirm Delete Button
+        /// </return>
+        /// <example>POST: /api/TeacherData/DeleteTeacher/id</example>
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            //Create an instance connection
+            MySqlConnection Conn = BlogTeacher.AccessDatabase();
+            //Open connection
+            Conn.Open();
+            //Command for database
+            MySqlCommand cmd = Conn.CreateCommand();
+            //Query
+            cmd.CommandText = "Delete FROM Teachers WHERE teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+            //close the connection
+            Conn.Close();
+        }
+        [HttpPost]
+        public void AddTeacher(Teacher NewTeacher)
+        {
+            //Create an instance connection
+            MySqlConnection Conn = BlogTeacher.AccessDatabase();
+            //Open connection
+            Conn.Open();
+            //Command for database
+            MySqlCommand cmd = Conn.CreateCommand();
+            //Query
+            cmd.CommandText = "insert into Teachers (teacherfname,teacherlname,salary,employeenumber,hiredate) value(@TeacherFname,@TeacherLname,@TeacherSalary,@EmployeeNumber,@TeacherJoinDate)";
+            
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@TeacherSalary", NewTeacher.TeacherSalary);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@TeacherJoinDate", NewTeacher.TeacherJoinDate);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+            //close the connection
+            Conn.Close();
+
         }
 
     }

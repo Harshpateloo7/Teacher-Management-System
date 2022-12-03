@@ -1,4 +1,5 @@
 ﻿body {
+    margin:10px;
     padding-top: 75px;
     padding-bottom: 20px;
 }
@@ -21,4 +22,5 @@ textarea {
     background-color: #777;
     border-color: #fff
 }
+
 

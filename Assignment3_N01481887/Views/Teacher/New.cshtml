@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New Teacher</h2>
+<form method="POST" action="/Teacher/Create">
+    <div>
+        <label for="TeacherFname">First Name  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp; &nbsp;</label>
+        <input type="text" id="TeacherFname" name="TeacherFname" style=" width:40%; padding:5px 5px; margin-top:10px; box-sizing:border-box" />
+    </div>
+    <div>
+        <label for="TeacherLname">Last Name  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp; &nbsp;</label>
+        <input type="text" id="TeacherLname" name="TeacherLname" style="width:40%; padding:5px 5px; margin-top:10px; box-sizing:border-box" />
+    </div>
+    <div>
+        <label for="TeacherSalary ">Salary per Hour  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;: &nbsp; &nbsp; &nbsp; &nbsp;</label>
+        <input type="text" id="TeacherSalary" name="TeacherSalary" style="width:40%; padding:5px 5px; margin-top:10px; box-sizing:border-box" />
+    </div>
+    <div>
+        <label for="EmployeeNumber">Employee Number &nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="text" id="EmployeeNumber" name="EmployeeNumber" style="width:40%; padding:5px 5px; margin-top:10px; box-sizing:border-box" />
+    </div>
+    <div>
+        <label for="TeacherJoinDate">Join Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+        <input type="date" id="TeacherJoinDate" name="TeacherJoinDate" style="width:40%; padding:5px 5px; margin-top:10px; box-sizing:border-box" />
+    </div>
+
+    <div>
+        <input type="submit" value="Create Teacher" style="margin-left:270px; margin-top:10px;" />
+    </div>
+</form>
+
+
+
