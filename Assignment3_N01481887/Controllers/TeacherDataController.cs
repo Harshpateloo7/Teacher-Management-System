@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -169,6 +170,54 @@ namespace Assignment3_N01481887.Controllers
             cmd.ExecuteNonQuery();
             //close the connection
             Conn.Close();
+
+        }
+        /// <summary>
+        /// Update an Teacher data in the system
+        /// </summary>
+        /// <param name="TeacherId">The Teacher id in the database</param>
+        /// <param name="TeacherFname">The Teacher first name in the system</param>
+        /// <param name="TeacherLname">The Teacher last name in the system</param>
+        /// <param name="TeacherSalary">The Teacher Salary in the system</param>
+        /// <param name="EmployeeNumber">The Teacher Employee Number in the system</param>
+        /// <param name="TeacherJoinDate">The Teacher join data and time</param>
+        /// <example>
+        /// POST: /api/TeacherData/UpdateTeacher
+        /// REQUEST BODY/POST DATA
+        /// {"TeacherID":3, "TeacherFname":"Harsh","TeacherLname":"Patel","TeacherSalary":"45","EmployeeNumber":"T563","TeacherJoinDate":"2020-12-5"}
+        /// </example>
+        [HttpPost]
+        [Route("api/Teacherdata/updateTeacher/{TeacherId}")]
+        public void UpdateTeacher(int TeacherId, [FromBody] Teacher UpdatedTeacher)
+        {
+            Debug.WriteLine("Teacher id is" + TeacherId);
+            Debug.WriteLine("Teacher first name" + UpdatedTeacher.TeacherFname);
+            Debug.WriteLine("Teacher last name"+UpdatedTeacher.TeacherLname);
+            Debug.WriteLine("Teacher Salary" + UpdatedTeacher.TeacherSalary);
+            Debug.WriteLine("Teacher Employee Numbber" + UpdatedTeacher.EmployeeNumber);
+            Debug.WriteLine("Teacher Join Date" + UpdatedTeacher.TeacherJoinDate);
+
+
+            //update the Teacher
+            string query = "Update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname,salary=@TeacherSalary ,employeenumber=@EmployeeNumber,hiredate=@TeacherJoinDate where teacherid=@id";
+            //Create an instance connection
+            MySqlConnection Conn = BlogTeacher.AccessDatabase();
+            //Open connection
+            Conn.Open();
+            //Command for database
+            MySqlCommand cmd = Conn.CreateCommand();
+            //Query
+
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", TeacherId);
+            cmd.Parameters.AddWithValue("@TeacherFname", UpdatedTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", UpdatedTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@TeacherSalary", UpdatedTeacher.TeacherSalary);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", UpdatedTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@TeacherJoinDate", UpdatedTeacher.TeacherJoinDate);
+            cmd.ExecuteNonQuery();
+            Conn.Close();
+
 
         }
 

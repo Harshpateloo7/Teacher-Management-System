@@ -1,0 +1,33 @@
+﻿@model Assignment3_N01481887.Models.Teacher
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Teacher</h2>
+<form method="post" action="/Teacher/Update/@Model.TeacherId">
+    <div>
+        <label>First Name:</label>
+        <input type="text" id="TeacherFname" name="TeacherFname" style="margin-left: 50px; height: 28px; margin-top: 10px; margin-bottom: 10px;" value="@Model.TeacherFname" />
+    </div>
+    <div>
+        <label>Last Name:</label>
+        <input type="text" id="TeacherLname" name="TeacherLname" style="margin-left: 50px; height: 28px; margin-top: 10px; margin-bottom: 10px;" value="@Model.TeacherLname"/>
+    </div>
+    <div>
+        <label>Salary Per Hours:</label>
+        <input type="text" id="TeacherSalary" name="TeacherSalary" style="margin-left: 8px; height: 28px; margin-top: 10px; margin-bottom: 10px;" value="@Model.TeacherSalary" />
+    </div>
+    <div>
+        <label>Employer Number:</label>
+        <input type="text" id="EmployeeNumber" name="EmployeeNumber" style="height: 28px; margin-top: 10px; margin-bottom: 10px;" value="@Model.EmployeeNumber" />
+    </div>
+    <div>
+        <label>Join Date:</label>
+        <input type="date" id="TeacherJoinDate" name="TeacherJoinDate" style="margin-left: 57px; margin-top: 10px; margin-bottom: 10px; height: 28px; width: 183px;" value="@Model.TeacherJoinDate"/>
+    </div>
+    <div>
+        <input type="submit" value="Update" style="margin-left: 124px; margin-top: 10px; margin-bottom: 10px; background-color:black; color:white;" />
+    </div>
+
+</form>
+

@@ -76,5 +76,38 @@ namespace Assignment3_N01481887.Controllers
             controller.AddTeacher(NewTeacher);
             return RedirectToAction("List");
         }
+        //GET: /Teacher/Edit/{id}
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+            //View/Teacher/Edit.cshtml
+            return View(SelectedTeacher);
+        }
+        //POST: /Teacher/Update/{id}
+        [HttpPost]
+        public ActionResult Update(int id, string TeacherFname, string TeacherLname, string TeacherSalary, string EmployeeNumber, string TeacherJoinDate)
+        {
+            Debug.WriteLine("Trying to update Teacher Data");
+            Debug.WriteLine(id);
+            Debug.WriteLine(TeacherFname);
+            Debug.WriteLine(TeacherLname);
+            Debug.WriteLine(TeacherSalary);
+            Debug.WriteLine(EmployeeNumber);
+            Debug.WriteLine(TeacherJoinDate);
+
+            Teacher UpdatedTeacher = new Teacher();
+            UpdatedTeacher.TeacherFname = TeacherFname;
+            UpdatedTeacher.TeacherLname = TeacherLname; 
+            UpdatedTeacher.TeacherSalary = TeacherSalary;
+            UpdatedTeacher.EmployeeNumber = EmployeeNumber;
+            UpdatedTeacher.TeacherJoinDate = TeacherJoinDate;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher(id, UpdatedTeacher);
+
+            return RedirectToAction("Show/"+id); //("List");
+        }
     }
 }
